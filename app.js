@@ -53,9 +53,26 @@ const carModelUsers = mongoose.model('users', carUsers);
 
 console.log(process.env.API_URL);
 
-app.get('/cars',  async (req, res) => {
-    const data = await carModel.find();
+app.get('/cars', async (req, res) => {
+    const data = await carModel.find().sort({ year: 1 });
     res.send(data);
+});
+
+app.get('/cars/:brand', async (req, res) => {
+    const cars = await carModel.find({
+        brand:
+        {
+            $regex:
+                new RegExp(req.params.brand, 'i')
+        }
+    });
+    // const cars = await carModel.find({ brand });
+    res.send(cars);
+});
+
+app.get('/users/asc', async (req, res) => {
+    const users = await carModelUsers.find().sort({ user: 1 });
+    res.send(users);
 });
 
 app.post('/cars', async (req, res) => {
@@ -68,6 +85,19 @@ app.post('/cars', async (req, res) => {
 app.get('/users', async (req, res) => {
     const data = await carModelUsers.find();
     res.send(data);
+});
+
+app.post('/users', async (req, res) => {
+    const { user, brand } = req.body;
+    await carModelUsers.create({ user, brand });
+    const users = await carModelUsers.find();
+    res.send(users);
+});
+
+app.get('/users/:name', async (req, res) => {
+    const { name } = req.params;
+    const users = await carModelUsers.find({ name });
+    res.send(users);
 });
 
 app.listen(3000, () => console.log('server is online'));
