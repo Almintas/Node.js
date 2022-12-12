@@ -48,6 +48,27 @@ const carUsers = new mongoose.Schema({
     }
 });
 
+const userAdverts = new mongoose.Schema({
+    brand: {
+        type: String,
+        reqiured: true
+    },
+    model: {
+        type: String,
+        reqiured: true
+    },
+    price: {
+        type: Number,
+        reqiured: true
+    },
+    user_id: {
+        type: String,
+        required: true
+    }
+});
+
+const carUserAdverts = mongoose.model('adverts', userAdverts);
+
 const carModelUsers = mongoose.model('users', carUsers);
 
 
@@ -98,6 +119,21 @@ app.get('/users/:name', async (req, res) => {
     const { name } = req.params;
     const users = await carModelUsers.find({ name });
     res.send(users);
+});
+
+app.post('/adverts', async (req, res) => {
+    const { brand, model, price, user_id } = req.body;
+    await carUserAdverts.create({ brand, model, price, user_id });
+    const advertsUser = await carUserAdverts.find();
+    res.send(advertsUser);
+});
+
+app.patch('/adverts/:id', async (req, res) => {
+    const { id } = req.body;
+    // const { brand, model, price } = req.body;
+    await carUserAdverts.updateOne({ _id: id });
+    const data = await carUserAdverts.find();
+    res.send(data);
 });
 
 app.listen(3000, () => console.log('server is online'));
