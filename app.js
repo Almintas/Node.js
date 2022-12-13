@@ -121,6 +121,13 @@ app.get('/users/:name', async (req, res) => {
     res.send(users);
 });
 
+app.delete('/adverts/:id', async (req, res) => {
+    const { id } = req.params;
+    await carUserAdverts.deleteOne({ _id: id });
+    const adverts = await carUserAdverts.find();
+    res.send(adverts);
+});
+
 app.post('/adverts', async (req, res) => {
     const { brand, model, price, user_id } = req.body;
     await carUserAdverts.create({ brand, model, price, user_id });
@@ -132,6 +139,11 @@ app.patch('/adverts/:id', async (req, res) => {
     const { id } = req.body;
     // const { brand, model, price } = req.body;
     await carUserAdverts.updateOne({ _id: id });
+    const data = await carUserAdverts.find();
+    res.send(data);
+});
+
+app.get('/adverts', async (req, res) => {
     const data = await carUserAdverts.find();
     res.send(data);
 });

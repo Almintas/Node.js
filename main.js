@@ -3,13 +3,14 @@ const brandInput = document.getElementById('brand');
 const modelInput = document.getElementById('model');
 const priceInput = document.getElementById('price');
 const user_idInput = document.getElementById('user');
-const addButton = document.getElementById('add');
+const button = document.getElementById('add')
+const advertsOutput = document.getElementById('div');
 
 const BASE_URL = 'http://localhost:3000';
 
 const user = '6390cd45a8b2d2de39344209';
 
-addButton.addEventListener('click', (event) => {
+button.addEventListener('click', (event) => {
     event.preventDefault();
     fetch(BASE_URL + '/adverts', {
         method: 'POST',
@@ -21,5 +22,38 @@ addButton.addEventListener('click', (event) => {
     .then((res) => res.json())
     .then((data) => {
         
+    });
+});
+
+fetch(BASE_URL + '/adverts')
+.then((res) => res.json())
+.then((adverts) => {
+    adverts.forEach((advert) => {
+        const advertCard = document.createElement('div');
+        const advertBrand = document.createElement('h3');
+        advertBrand.textContent = advert.brand;
+
+        const advertModel = document.createElement('p');
+        advertModel.textContent = advert.model;
+
+        const advertPrice = document.createElement('p');
+        advertPrice.textContent = advert.price;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'DELETE';
+
+        deleteButton.addEventListener('click', ()=> {
+            fetch(BASE_URL + '/adverts/' + advert._id, {
+                method: 'DELETE'
+            })
+            .then(() => window.location.reload());
+        })
+
+        advertCard.appendChild(advertBrand);
+        advertCard.appendChild(advertModel);
+        advertCard.appendChild(advertPrice);
+        advertCard.appendChild(deleteButton);
+
+        advertsOutput.appendChild(advertCard);
     });
 });
