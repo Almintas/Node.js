@@ -2,26 +2,19 @@ const form = document.getElementById('form');
 const brandInput = document.getElementById('brand');
 const modelInput = document.getElementById('model');
 const priceInput = document.getElementById('price');
-const user_idInput = document.getElementById('user');
-const button = document.getElementById('add')
 const advertsOutput = document.getElementById('div');
 
 const BASE_URL = 'http://localhost:3000';
 
-const user = '6390cd45a8b2d2de39344209';
+const USER = '6390cd45a8b2d2de39344209';
 
-button.addEventListener('click', (event) => {
-    event.preventDefault();
+form.addEventListener('submit', () => {
     fetch(BASE_URL + '/adverts', {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json'
         },
-        body: JSON.stringify({ brand: brandInput.value, model: modelInput.value, price: priceInput.value, user_id: user })
-    })
-    .then((res) => res.json())
-    .then((data) => {
-        
+        body: JSON.stringify({ brand: brandInput.value, model: modelInput.value, price: priceInput.value, user_id: USER })
     });
 });
 
