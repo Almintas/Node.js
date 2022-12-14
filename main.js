@@ -3,6 +3,7 @@ const brandInput = document.getElementById('brand');
 const modelInput = document.getElementById('model');
 const priceInput = document.getElementById('price');
 const advertsOutput = document.getElementById('div');
+const editDiv = document.getElementById('editDiv');
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -40,12 +41,46 @@ fetch(BASE_URL + '/adverts')
                 method: 'DELETE'
             })
             .then(() => window.location.reload());
-        })
+        });
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'EDIT';
+
+        editButton.addEventListener('click', () => {
+            const editCard = document.createElement('form');
+
+            const editBrand = document.createElement('input');
+            editBrand.setAttribute('id', 'brand-input');
+            editBrand.setAttribute('placeholder', 'Brand');
+            editBrand.setAttribute('required', true);
+
+            const editModel = document.createElement('input');
+            editModel.setAttribute('id', 'model-input');
+            editModel.setAttribute('placeholder', 'Model');
+            editModel.setAttribute('required', true);
+
+            const editPrice = document.createElement('input');
+            editPrice.setAttribute('id', 'price-input');
+            editPrice.setAttribute('placeholder', 'Price');
+            editPrice.setAttribute('required', true);
+            editPrice.setAttribute('type', 'number');
+
+            const submitButton = document.createElement('button');
+            submitButton.textContent = 'Atnaujinti skelbima';
+
+            editCard.appendChild(editBrand);
+            editCard.appendChild(editModel);
+            editCard.appendChild(editPrice);
+            editCard.appendChild(submitButton);
+
+            editDiv.appendChild(editCard);
+        });
 
         advertCard.appendChild(advertBrand);
         advertCard.appendChild(advertModel);
         advertCard.appendChild(advertPrice);
         advertCard.appendChild(deleteButton);
+        advertCard.appendChild(editButton);
 
         advertsOutput.appendChild(advertCard);
     });
