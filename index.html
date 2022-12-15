@@ -5,17 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <form id="form">
-        <input id="brand" required placeholder="Brand"/>
-        <input id="model" required placeholder="Model"/>
-        <input id="price" type="number" required placeholder="Price"/>
-        <button>Prideti</button>
+        <input id="brand" placeholder="Brand" required />
+        <input id="model" placeholder="Model" required />
+        <input type="number" id="price" placeholder="Price" required />
+
+        <button>Pridėti skelbimą</button>
     </form>
 
-    <div id="div"></div>
-    <div id="editDiv"></div>
+    <div id="edit-form-output"></div>
+
+    <form class="hidden" id="edit-form">
+        <input id="edit-brand-input" placeholder="Brand" required />
+        <input id="edit-model-input" placeholder="Model" required />
+        <input type="number" id="edit-price-input" placeholder="Price" required />
+
+        <button>Atnaujinti skelbimą</button>
+    </form>
+
+    <div id="adverts"></div>
 
     <script src="main.js"></script>
 </body>
