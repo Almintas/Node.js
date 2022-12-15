@@ -8,11 +8,15 @@ const editFormOutput = document.getElementById('edit-form-output');
 const editBrandInput = document.getElementById('edit-brand-input');
 const editModelInput = document.getElementById('edit-model-input');
 const editPriceInput = document.getElementById('edit-price-input');
+const cancelEditFormButton = document.getElementById('cancel-edit-button');
+const descriptionInput = document.getElementById('description');
 
 const USER_ID = '6390cd45a8b2d2de39344209';
 const BASE_URL = 'http://localhost:3000';
 
 let editAdvertId;
+
+editForm.classList.add('hidden');
 
 editForm.addEventListener('submit', () => {
     const updatedAdvert = {
@@ -34,12 +38,14 @@ form.addEventListener('submit', (event) => {
     const brand = brandInput.value;
     const model = modelInput.value;
     const price = priceInput.value;
+    const description = descriptionInput.value;
 
     const newAdvert = {
         brand,
         model,
         price,
-        user_id: USER_ID
+        user_id: USER_ID,
+        description
     };
 
     fetch(BASE_URL + '/adverts', {
@@ -49,6 +55,13 @@ form.addEventListener('submit', (event) => {
         },
         body: JSON.stringify(newAdvert)
     });
+});
+
+cancelEditFormButton.addEventListener('click', (req, res) => {
+    editForm.classList.add('hidden');
+    editBrandInput.value = '';
+    editModelInput.value = '';
+    editPriceInput.value = '';
 });
 
 fetch(BASE_URL + '/adverts')
@@ -69,6 +82,9 @@ function createAdvertCard(advert) {
 
     const advertPrice = document.createElement('p');
     advertPrice.textContent = advert.price;
+
+    const advertDescription = document.createElement('p');
+    advertDescription.textContent = advert.description;
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'DELETE';
@@ -124,6 +140,7 @@ function createAdvertCard(advert) {
     advertCard.appendChild(advertBrand);
     advertCard.appendChild(advertModel);
     advertCard.appendChild(advertPrice);
+    advertCard.appendChild(advertDescription);
     advertCard.appendChild(deleteButton);
     advertCard.appendChild(editButton);
 

@@ -64,6 +64,9 @@ const userAdverts = new mongoose.Schema({
     user_id: {
         type: String,
         required: true
+    },
+    description: {
+        type: String
     }
 });
 
@@ -129,8 +132,8 @@ app.delete('/adverts/:id', async (req, res) => {
 });
 
 app.post('/adverts', async (req, res) => {
-    const { brand, model, price, user_id } = req.body;
-    await carUserAdverts.create({ brand, model, price, user_id });
+    const { brand, model, price, description, user_id, } = req.body;
+    await carUserAdverts.create({ brand, model, price, user_id, description });
     const advertsUser = await carUserAdverts.find();
     res.send(advertsUser);
 });

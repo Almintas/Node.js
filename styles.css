@@ -17,6 +17,18 @@
     /* margin-left: 10px; */
 }
 
+.edit-form {
+    align-items: center;
+    display: flex;
+}
+
+.cancel-edit-button {
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    display: inline-flex;
+}
+
 .hidden {
     display: none;
 }
